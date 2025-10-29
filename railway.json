@@ -1,8 +1,38 @@
-{
-  "build": {
-    "builder": "NIXPACKS"
-  },
-  "deploy": {
-    "startCommand": "gunicorn -w 1 -k gthread -b 0.0.0.0:$PORT app.app_web:app"
-  }
+﻿{
+  "services": [
+    {
+      "name": "SLH_bot",
+      "rootDirectory": "bot",
+      "buildCommand": "python -m pip install -r requirements_bot.txt",
+      "startCommand": "python app.py",
+      "healthcheckPath": "/healthz",
+      "envVars": [
+        "TELEGRAM_BOT_TOKEN",
+        "APPROVED_CHAT_ID",
+        "ADMIN_USER_ID",
+        "DATA_DIR",
+        "LOG_LEVEL",
+        "DEBUG",
+        "BSC_RPC_URL",
+        "CHAIN_ID",
+        "SELA_TOKEN_ADDRESS",
+        "API_BASE",
+        "PORT"
+      ]
+    },
+    {
+      "name": "slh_API",
+      "rootDirectory": "api",
+      "buildCommand": "python -m pip install -r requirements_api.txt",
+      "startCommand": "python -m uvicorn main:app --host 0.0.0.0 --port ${PORT}",
+      "healthcheckPath": "/healthz",
+      "envVars": [
+        "SECRET_KEY",
+        "BSC_RPC_URL",
+        "CHAIN_ID",
+        "SELA_TOKEN_ADDRESS",
+        "PORT"
+      ]
+    }
+  ]
 }

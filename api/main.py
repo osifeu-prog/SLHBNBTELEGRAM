@@ -1,4 +1,4 @@
-﻿import os, json
+﻿import os
 from fastapi import FastAPI, HTTPException
 from fastapi.responses import JSONResponse
 import httpx
@@ -6,6 +6,7 @@ import httpx
 RPC = os.getenv("BSC_RPC_URL", "https://data-seed-prebsc-1-s1.binance.org:8545")
 CHAIN_ID = int(os.getenv("CHAIN_ID", "97") or 97)
 TOKEN = os.getenv("SELA_TOKEN_ADDRESS", "")
+
 app = FastAPI()
 
 def _rpc_payload(method, params, id=1):

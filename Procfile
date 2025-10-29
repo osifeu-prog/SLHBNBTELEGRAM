@@ -1,1 +1,2 @@
-web: gunicorn -w 1 -k gthread -b 0.0.0.0:$PORT app.app_web:app
+﻿# defined per service in subfolders
+
